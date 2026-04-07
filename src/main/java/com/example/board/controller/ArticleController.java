@@ -24,8 +24,12 @@ public class ArticleController {
 
     @PostMapping("/articles/create")
     public void createArticle(@ModelAttribute ArticleForm form) {
-
+//        DTO를 Entity로 변환
         Article article = form.toEntity();
+        log.info(form.toString());
+
+//        Entity를 DB에 저장
         Article saved = articleRepository.save(article);
+        log.info(saved.toString());
     }
 }
