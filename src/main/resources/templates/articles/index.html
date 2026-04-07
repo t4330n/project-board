@@ -80,9 +80,13 @@
 
     <div class="row mb-2 text-center" th:each="article : ${articles}">
         <div class="col-4 themed-grid-col" th:text="${article.id}">1</div>
-        <div class="col-4 themed-grid-col" th:text="${article.title}">임시 제목</div>
+        <div class="col-4 themed-grid-col">
+            <a th:href="@{/articles/{id}(id=${article.id})}" th:text="${article.title}"></a>
+        </div>
         <div class="col-4 themed-grid-col" th:text="${article.content}">임시 내용</div>
     </div>
+
+    <a href="/articles/new">New Article</a>
 </div>
 
 <!-- site info -->
