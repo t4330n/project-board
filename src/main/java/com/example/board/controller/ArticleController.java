@@ -6,6 +6,7 @@ import com.example.board.repository.ArticleRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -58,5 +60,26 @@ public class ArticleController {
 
         model.addAttribute("articles", articles);
         return "articles/index";
+    }
+
+    @GetMapping("/articles/{id}/edit")
+    public String edit(@PathVariable Long id, Model model) {
+        Article article = articleRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다. id=" + id));
+
+        model.addAttribute("article", article);
+        return "articles/edit";
+    }
+
+    @Transactional
+    @PostMapping("/articles/update")
+    public String update(@ModelAttribute ArticleForm form) {
+
+        Article target = articleRepository.findById(form.getId())
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다. id=" + form.getId()));
+
+        target.update(form.getTitle(), form.getContent());
+
+        return "redirect:/articles/" + target.getId();
     }
 }

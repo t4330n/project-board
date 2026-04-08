@@ -70,22 +70,23 @@
     </nav>
 </div>
 
-<!-- content -->
 <div class="container">
-    <div class="row mb-3 text-center">
-        <div class="col-4 themed-grid-col">Id</div>
-        <div class="col-4 themed-grid-col">Title</div>
-        <div class="col-4 themed-grid-col">Content</div>
-    </div>
+    <form class="container" action="/articles/update" method="post" th:object="${article}">
 
-    <div class="row mb-2 text-center">
-        <div class="col-4 themed-grid-col" th:text="${article.id}"></div>
-        <div class="col-4 themed-grid-col" th:text="${article.title}"></div>
-        <div class="col-4 themed-grid-col" th:text="${article.content}"></div>
-    </div>
+        <input type="hidden" th:field="*{id}">
 
-    <a th:href="@{/articles/{id}/edit(id=${article.id})}" class="btn btn-primary">Edit</a>
-    <a href="/articles">Go to Articles</a>
+        <div class="mb-3">
+            <label class="form-label">제목</label>
+            <input type="text" class="form-control" th:field="*{title}">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">내용</label>
+            <textarea class="form-control" rows="3" th:field="*{content}"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <a th:href="@{/articles/{id}(id=*{id})}">Back</a>
+    </form>
 </div>
 
 <!-- site info -->
