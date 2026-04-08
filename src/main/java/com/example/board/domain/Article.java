@@ -26,4 +26,13 @@ public class Article {
         this.title = title;
         this.content = content;
     }
+
+    public void patch(Article article) {
+        if (article.getTitle() != null) {
+            this.title = article.getTitle();
+        }
+        if (article.getContent() != null) {
+            this.content = article.getContent();
+        }
+    }
 }
